@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="App.Starting.Theme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#03045e</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_plane_ticket</item>
+        <item name="postSplashScreenTheme">@style/Theme.WannaFly</item>
+    </style>
+</resources>
