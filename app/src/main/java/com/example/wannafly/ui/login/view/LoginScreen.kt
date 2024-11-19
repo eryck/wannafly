@@ -3,11 +3,16 @@ package com.example.wannafly.ui.login.view
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -40,174 +45,194 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier) {
     Surface(
         color = MaterialTheme.colorScheme.background
     ) {
-        Column(
+        LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp)
+            modifier = if (WindowInsets.isImeVisible) {
+                Modifier
+                    .fillMaxSize()
+                    .imePadding()
+            } else {
+                modifier
+                    .fillMaxSize()
+                    .imePadding()
+            }
         ) {
-            Card (
-                shape = RoundedCornerShape(20.dp)
-            ) {
+            item {
                 Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                     modifier = Modifier
+                        .fillMaxSize()
                         .padding(16.dp)
                 ) {
-                    var emailUpdate by remember { mutableStateOf("") }
-                    var passwordUpdate by remember { mutableStateOf("") }
-                    var passwordVisible by remember { mutableStateOf(false) }
-                    Text(
-                        text = "Let's Travel you in",
-                        fontSize = 24.sp
-                    )
-
-                    Text(
-                        text = "Discover the World with Every Sign In",
-                        fontSize = 18.sp
-                    )
-                    Column(
-                        modifier = Modifier
-                            .padding(vertical = 16.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    Card(
+                        shape = RoundedCornerShape(20.dp)
                     ) {
-                        OutlinedTextField(
-                            value = emailUpdate,
-                            onValueChange = { emailUpdate = it },
-                            maxLines = 1,
-                            placeholder = {
-                                Text("Email")
-                            },
-                            shape = RoundedCornerShape(12.dp),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Email,
-                                imeAction = ImeAction.Next
+                        Column(
+                            modifier = Modifier
+                                .padding(16.dp)
+                        ) {
+                            var emailUpdate by remember { mutableStateOf("") }
+                            var passwordUpdate by remember { mutableStateOf("") }
+                            var passwordVisible by remember { mutableStateOf(false) }
+                            Text(
+                                text = "Let's Travel you in",
+                                fontSize = 24.sp
                             )
-                        )
-                        OutlinedTextField(
-                            value = passwordUpdate,
-                            onValueChange = { passwordUpdate = it },
-                            maxLines = 1,
-                            placeholder = {
-                                Text("Password")
-                            },
-                            shape = RoundedCornerShape(12.dp),
-                            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                            trailingIcon = {
-                                val image = if (passwordVisible) Icons.Filled.CheckCircle else Icons.Filled.Close
-                                val description = if (passwordVisible) "Hide password" else "Show password"
 
-                                if (passwordUpdate.isNotEmpty()) {
-                                    IconButton(
-                                        onClick = { passwordVisible = !passwordVisible }
+                            Text(
+                                text = "Discover the World with Every Sign In",
+                                fontSize = 18.sp
+                            )
+                            Column(
+                                modifier = Modifier
+                                    .padding(vertical = 16.dp),
+                                verticalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                OutlinedTextField(
+                                    value = emailUpdate,
+                                    onValueChange = { emailUpdate = it },
+                                    maxLines = 1,
+                                    placeholder = {
+                                        Text("Email")
+                                    },
+                                    shape = RoundedCornerShape(12.dp),
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Email,
+                                        imeAction = ImeAction.Next
+                                    ),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                )
+                                OutlinedTextField(
+                                    value = passwordUpdate,
+                                    onValueChange = { passwordUpdate = it },
+                                    maxLines = 1,
+                                    placeholder = {
+                                        Text("Password")
+                                    },
+                                    shape = RoundedCornerShape(12.dp),
+                                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                                    trailingIcon = {
+                                        val image = if (passwordVisible) Icons.Filled.CheckCircle else Icons.Filled.Close
+                                        val description = if (passwordVisible) "Hide password" else "Show password"
+
+                                        if (passwordUpdate.isNotEmpty()) {
+                                            IconButton(
+                                                onClick = { passwordVisible = !passwordVisible }
+                                            ) {
+                                                Icon(imageVector = image, contentDescription = description)
+                                            }
+                                        }
+                                    },
+                                    keyboardActions = KeyboardActions.Default,
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Password,
+                                        imeAction = ImeAction.Done
+                                    ),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                )
+                                Row(
+                                    horizontalArrangement = Arrangement.End,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                ) {
+                                    Text(
+                                        text = "Forgot password!",
+                                        fontSize = 14.sp
+                                    )
+                                }
+                            }
+                            Row(
+                                horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            ) {
+                                Button(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    onClick = {
+
+                                    }
+                                ) {
+                                    Text("Sign In")
+                                }
+                            }
+                            Row(
+                                horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp)
+                            ) {
+                                Text("or sign in with")
+                            }
+                            Row(
+                                horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            ) {
+                                ElevatedCard {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(8.dp)
                                     ) {
-                                        Icon(imageVector = image, contentDescription = description)
+                                        Image(
+                                            Icons.Filled.MailOutline,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .size(48.dp)
+                                        )
                                     }
                                 }
-                            },
-                            keyboardActions = KeyboardActions.Default,
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Password,
-                                imeAction = ImeAction.Done
-                            )
-                        )
-                        Row(
-                            horizontalArrangement = Arrangement.End,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        ) {
-                            Text(
-                                text = "Forgot password!",
-                                fontSize = 14.sp
-                            )
+                            }
+                            Row(
+                                horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 26.dp)
+                            ) {
+                                Text(
+                                    text = "Create account!",
+                                    fontSize = 14.sp
+                                )
+                            }
                         }
                     }
+
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .fillMaxWidth()
+                            .padding(vertical = 16.dp)
                     ) {
+                        // TODO: como faremos para estilizar um botao secundario?
                         Button(
+                            colors = ButtonColors(
+                                containerColor = Color.White,
+                                contentColor = Color.White,
+                                disabledContainerColor = Color.Gray,
+                                disabledContentColor = Color.Gray
+                            ),
                             modifier = Modifier
                                 .fillMaxWidth(),
                             onClick = {
 
                             }
                         ) {
-                            Text("Sign In")
+                            Text(
+                                text = "Sign Up",
+                                color = MaterialTheme.colorScheme.primary
+                            )
                         }
                     }
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp)
-                    ) {
-                        Text("or sign in with")
-                    }
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        ElevatedCard {
-                            Column(
-                                modifier = Modifier
-                                    .padding(8.dp)
-                            ) {
-                                Image(
-                                    Icons.Filled.MailOutline,
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .size(48.dp)
-                                )
-                            }
-                        }
-                    }
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 26.dp)
-                    ) {
-                        Text(
-                            text = "Create account!",
-                            fontSize = 14.sp
-                        )
-                    }
-                }
-            }
-
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp)
-            ) {
-                // TODO: como faremos para estilizar um botao secundario?
-                Button(
-                    colors = ButtonColors(
-                        containerColor = Color.White,
-                        contentColor = Color.White,
-                        disabledContainerColor = Color.Gray,
-                        disabledContentColor = Color.Gray
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                    ,
-                    onClick = {
-
-                    }
-                ) {
-                    Text(
-                        text = "Sign Up",
-                        color = MaterialTheme.colorScheme.primary
-                    )
                 }
             }
         }
