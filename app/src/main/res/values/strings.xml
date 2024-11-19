@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Wanna Fly</string>
+
+    <string name="an_unexpected_error_occured">An unexpected error occurred</string>
+    <string name="check_your_internet_connection">Couldn\'t reach server. Check your internet connection.</string>
+    <string name="try_again_message">Please, try again after some time</string>
 </resources>
