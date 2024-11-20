@@ -2,8 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.gsm.google.services)
-    id("kotlinx-serialization")
+    alias(libs.plugins.gms.google.services)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -84,4 +83,8 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.ui.auth)
+
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.coil.compose)
 }
