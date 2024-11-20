@@ -1,5 +1,6 @@
 package com.example.wannafly.ui.login.view
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,7 +20,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
@@ -31,6 +31,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,16 +39,36 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.wannafly.R
+import com.example.wannafly.ui.login.uistate.SignInState
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(
+    modifier: Modifier = Modifier,
+    // TODO: this params will be removed when we had koin injection
+    state: SignInState,
+    onSingInClick: () -> Unit
+) {
+    val context = LocalContext.current
+    LaunchedEffect(state.signInError) {
+        state.signInError?.let { error ->
+            Toast.makeText(
+                context,
+                error,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
     Surface(
         color = MaterialTheme.colorScheme.background
     ) {
@@ -179,16 +200,19 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                                 modifier = Modifier
                                     .fillMaxWidth()
                             ) {
-                                ElevatedCard {
+                                ElevatedCard(
+                                    // TODO: review how to goes to other screen with viewModel states
+                                    onClick = onSingInClick
+                                ) {
                                     Column(
                                         modifier = Modifier
                                             .padding(8.dp)
                                     ) {
                                         Image(
-                                            Icons.Filled.MailOutline,
+                                            painter = painterResource(R.drawable.ic_google),
                                             contentDescription = null,
                                             modifier = Modifier
-                                                .size(48.dp)
+                                                .size(36.dp)
                                         )
                                     }
                                 }
