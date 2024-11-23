@@ -5,30 +5,26 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.example.wannafly.presentation.navgraph.NavGraph
-import com.example.wannafly.presentation.navgraph.Route
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 import com.example.wannafly.data.remote.service.GoogleAuthUiClient
-import com.example.wannafly.presentation.navigation.WannaFlyNavigator
+import com.example.wannafly.presentation.navgraph.NavGraph
+import com.example.wannafly.presentation.navgraph.Route
 import com.example.wannafly.ui.login.view.LoginScreen
 import com.example.wannafly.ui.login.viewmodel.LoginViewModel
 import com.example.wannafly.ui.profile.ProfileScreen
@@ -108,7 +104,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 LoginScreen(
-                    modifier = Modifier.padding(innerPadding),
+//                    modifier = Modifier.padding(innerPadding),
                     state = state,
                     onSingInClick = {
                         lifecycleScope.launch {

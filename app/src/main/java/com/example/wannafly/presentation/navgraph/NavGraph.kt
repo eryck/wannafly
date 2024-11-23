@@ -12,7 +12,7 @@ fun NavGraph(
     startDestination: String
 ) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = startDestination){
+    NavHost(navController = navController, startDestination = startDestination) {
 
         navigation(
             route = Route.WannaFlyNavigation.route,
